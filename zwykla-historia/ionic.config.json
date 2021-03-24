@@ -1,0 +1,7 @@
+{
+  "name": "zwykla-historia",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
