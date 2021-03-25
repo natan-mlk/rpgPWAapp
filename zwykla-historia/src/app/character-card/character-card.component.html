@@ -1,0 +1,54 @@
+<ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <ion-icon name="dice-outline"></ion-icon>
+          Zwykła Historia</ion-title>
+        </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+
+
+<ion-card *ngIf="!isLoading">
+  <img src={{avatarImage}}>
+  <ion-card-header>
+    <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
+    <ion-card-title>{{selectedCharacter}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <h3>Korony: {{characterData.money | GoldenCrownsPipe}}, 
+      Szylingi: {{ characterData.money | SilverPipe}}, 
+      Pensy: {{ characterData.money | PennyPipe}}
+    </h3>
+  </ion-card-content>
+
+  <ion-list>
+    <ion-list-header>
+      Historia
+    </ion-list-header>
+    
+    <ion-item *ngFor="let history of characterData.history">
+      <ion-icon *ngIf="history.type" style="color: rgb(79, 179, 13)" slot="start" name="trending-up-outline"></ion-icon>
+      <ion-icon *ngIf="!history.type" style="color: rgb(189, 44, 0)" slot="start" name="trending-down-outline"></ion-icon>
+      <ion-label>
+        <span>
+          Korony: {{history.value | GoldenCrownsPipe}},
+          Szylingi: {{ history.value | SilverPipe}},
+          Pensy: {{ history.value | PennyPipe}} 
+        </span><br>
+        <span>Notka: {{history.note}}</span>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-card>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button [routerLink]="['']">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+</ion-content>
+
