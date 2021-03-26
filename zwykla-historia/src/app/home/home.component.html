@@ -8,10 +8,38 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-button [routerLink]="['/ermin']">ermin</ion-button>
-  <ion-button [routerLink]="['/lokkri']">lokkri</ion-button>
+
+
+  <ion-list>
+    <!-- <ion-list-header>
+      Bohaterowie
+    </ion-list-header> -->
+    <h2>Bohaterowie</h2>
+    <ion-item color="primary" [routerLink]="['/verbena']">
+      <ion-icon slot="start" name="book-outline"></ion-icon>
+      <ion-label>Verbena</ion-label>
+    </ion-item>
+
+    <ion-item color="primary" [routerLink]="['/lokkri']">
+      <ion-icon slot="start" name="diamond-outline"></ion-icon>
+      <ion-label>Lokkri Baralikson</ion-label>
+    </ion-item>
+
+    <ion-item color="primary" [routerLink]="['/gustav']">
+      <ion-icon slot="start" name="flame-outline"></ion-icon>
+      <ion-label>Gustav</ion-label>
+    </ion-item>
+
+    <ion-item color="primary" [routerLink]="['/ermin']">
+      <ion-icon slot="start" name="restaurant-outline"></ion-icon>
+      <ion-label>Ermin o'Mill</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- <ion-button [routerLink]="['/ermin']">ermin</ion-button> -->
+  <!-- <ion-button [routerLink]="['/lokkri']">lokkri</ion-button>
   <ion-button [routerLink]="['/gustav']">gustav</ion-button>
-  <ion-button [routerLink]="['/verbena']">verbena</ion-button>
+  <ion-button [routerLink]="['/verbena']">verbena</ion-button> -->
 </ion-content>
 
 

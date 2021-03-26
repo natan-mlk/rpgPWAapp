@@ -13,34 +13,75 @@
   <img src={{avatarImage}}>
   <ion-card-header>
     <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
-    <ion-card-title>{{selectedCharacter}}</ion-card-title>
+    <ion-card-title>{{characterData.name}}</ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
-    <h3>Korony: {{characterData.money | GoldenCrownsPipe}}, 
-      Szylingi: {{ characterData.money | SilverPipe}}, 
-      Pensy: {{ characterData.money | PennyPipe}}
-    </h3>
-  </ion-card-content>
+    <h2>Korony: <b>{{ characterData.money | GoldenCrownsPipe}}</b>, 
+      Szylingi: <b>{{ characterData.money | SilverPipe}}</b>, 
+      Pensy: <b>{{ characterData.money | PennyPipe}}</b>
+    </h2>
 
-  <ion-list>
-    <ion-list-header>
-      Historia
-    </ion-list-header>
+
+    <form [formGroup]="formGroup">
+      <mat-form-field appearance="outline" style="width: 30%; margin-right: 5%;">
+        <mat-label>Korony</mat-label>
+        <input autocomplete="off" 
+        type="number" matInput
+        formControlName="goldValue" 
+        placeholder="korony">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 30%; margin-right: 5%;">
+        <mat-label>Szylingi</mat-label>
+        <input autocomplete="off"
+        type="number" matInput
+        formControlName="silverValue" 
+        placeholder="szylingi">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 30%;">
+        <mat-label>Pensy</mat-label>
+        <input autocomplete="off"
+        type="number" matInput
+        formControlName="pennyValue" 
+        placeholder="pensy">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" style="width: 65%;">
+        <mat-label>Notka</mat-label>
+        <textarea matInput
+        formControlName="note" 
+        placeholder="notatka"></textarea>
+      </mat-form-field>
+
+    </form>
+    <div style="display: flex; flex-direction: row-reverse;">
+    <button mat-fab color="primary" style="font-size: 30px;" (click)="update(true)">+</button>
+    <button mat-fab color="accent" style="font-size: 30px; margin-right: 25px;" (click)="update(false)">-</button>
+    </div>
+
     
-    <ion-item *ngFor="let history of characterData.history">
-      <ion-icon *ngIf="history.type" style="color: rgb(79, 179, 13)" slot="start" name="trending-up-outline"></ion-icon>
-      <ion-icon *ngIf="!history.type" style="color: rgb(189, 44, 0)" slot="start" name="trending-down-outline"></ion-icon>
-      <ion-label>
-        <span>
-          Korony: {{history.value | GoldenCrownsPipe}},
-          Szylingi: {{ history.value | SilverPipe}},
-          Pensy: {{ history.value | PennyPipe}} 
-        </span><br>
-        <span>Notka: {{history.note}}</span>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+    <ion-list style="margin-top: 20px;">
+      <ion-list-header style="font-size: 20px;">
+        <ion-icon name="receipt-outline"></ion-icon> &nbsp; Historia
+      </ion-list-header>
+      
+      <ion-item *ngFor="let history of characterData.history">
+        <ion-icon *ngIf="history.type" style="color: rgb(79, 179, 13)" slot="start" name="trending-up-outline"></ion-icon>
+        <ion-icon *ngIf="!history.type" style="color: rgb(189, 44, 0)" slot="start" name="trending-down-outline"></ion-icon>
+        <ion-label>
+          <div>
+            ZK: {{history.value | GoldenCrownsPipe}},
+            Szyl: {{ history.value | SilverPipe}},
+            Pens: {{ history.value | PennyPipe}} 
+          </div><br>
+          <span>Notka: <i>{{history.note}}</i></span>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
 
 </ion-card>
 
