@@ -11,7 +11,8 @@ interface CharacterData {
   history: {
     value: number,
     type: boolean, 
-    note?: string
+    note?: string,
+    tax?: number
   }[]
 }
 
@@ -29,6 +30,13 @@ interface FormValue {
 })
 export class CharacterCardComponent implements OnInit {
   
+  // zrób porządek w kodzie
+// dodaj walidator na ujemny input
+// OGARNIJ security bazy danych !! w jednym projekcie i w drugim
+// zablokuj możliwość wysłania zerowego inputu
+// zablokój możliwość wpisania "e"
+// na stronie głównej "prostu panel - questy aktualne"
+
   characterData: CharacterData;
   isLoading: boolean = true;
   public selectedCharacter: string;
@@ -76,26 +84,33 @@ export class CharacterCardComponent implements OnInit {
       }
   }
 
-  // ------------------
 
   update(operationType: boolean){
     const formValue: FormValue = this.formGroup.value;
-    const inputMoney = (formValue.goldValue * 20 * 12) + (formValue.silverValue * 12) + formValue.pennyValue;
-    
-    if(!operationType && (this.characterData.money < inputMoney)){
+    let inputMoneyAmount = (formValue.goldValue * 20 * 12) + (formValue.silverValue * 12) + formValue.pennyValue;
+    let taxForMages: number = 0;
+
+    if(!operationType && (this.characterData.money < inputMoneyAmount)){
       console.error('ERROR');
       this.snackBar.open('Chesz wydać więcej niż masz!', undefined, {
         duration: 3000,
       });
     } else {
+      // jeśli jest gustav i rodzaj operationType === true, odlicz podatek i utwórz osobną historię 
 
-    this.createMoneyHistory(formValue, inputMoney, operationType);
+      if(this.selectedCharacter === 'gustav' && operationType) { // zmienić na jakiś enum string z gustavem
+        taxForMages = (inputMoneyAmount * 0.1)
+        console.log('TAX - ', taxForMages)
+        inputMoneyAmount = inputMoneyAmount - taxForMages;
+      }
+
+    this.createMoneyHistory(formValue, inputMoneyAmount, operationType, taxForMages);
     let newMoneyAmount = 0;
 
     if (operationType){
-    newMoneyAmount = this.characterData.money + inputMoney;
+    newMoneyAmount = this.characterData.money + inputMoneyAmount;
     } else {
-      newMoneyAmount = this.characterData.money - inputMoney;
+      newMoneyAmount = this.characterData.money - inputMoneyAmount;
     }
 
     this.characterData.money = newMoneyAmount;
@@ -103,13 +118,26 @@ export class CharacterCardComponent implements OnInit {
     }
   }
 
-  private createMoneyHistory(formValue: FormValue, inputMoney: number, operationType: boolean){
-    const characterHistoryObj = {
-      'note': formValue.note, 
-      'value': operationType ? inputMoney : inputMoney, 
-      'type': operationType
-    };
+  private createMoneyHistory(formValue: FormValue, inputMoney: number, operationType: boolean, taxForMages?: number){
+    let characterHistoryObj;
+    if(this.selectedCharacter === 'gustav' && operationType){
+      characterHistoryObj = {
+        'note': formValue.note, 
+        'value': operationType ? inputMoney : inputMoney, 
+        'tax': taxForMages,
+        'type': operationType
+      };
+    } else {
+      characterHistoryObj = {
+        'note': formValue.note, 
+        'value': operationType ? inputMoney : inputMoney, 
+        'type': operationType
+      };
+      
+    }
+
     console.log('characterHistoryObj money', characterHistoryObj.value)
+
     if(this.characterData.history.length < 10){
       this.characterData.history.unshift(characterHistoryObj)
     } else {
