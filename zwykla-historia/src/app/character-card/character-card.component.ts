@@ -32,15 +32,15 @@ export class CharacterCardComponent implements OnInit {
   
   // zrób porządek w kodzie
 // dodaj walidator na ujemny input
-// OGARNIJ security bazy danych !! w jednym projekcie i w drugim
 // zablokuj możliwość wysłania zerowego inputu
 // zablokój możliwość wpisania "e"
-// na stronie głównej "prostu panel - questy aktualne"
+// na stronie głównej "prosty panel - questy aktualne"
+// wersja na kompa? Żeby panel działania był węższy a nie 100% szerkości monitora?
 
   characterData: CharacterData;
   isLoading: boolean = true;
   public selectedCharacter: string;
-  private databaseAddr: string = 'https://amilko-home-default-rtdb.europe-west1.firebasedatabase.app/';
+  private databaseAddr: string = 'https://zwykla-historia-default-rtdb.europe-west1.firebasedatabase.app/';
   avatarImage: string;
 
   formGroup = new FormGroup({
@@ -62,7 +62,7 @@ export class CharacterCardComponent implements OnInit {
     this.selectedCharacter = this.selectedCharacter.substring(1);
     this.setAvatarImage(this.selectedCharacter);
 
-    this.http.get('https://amilko-home-default-rtdb.europe-west1.firebasedatabase.app/featuredApp/characters/' 
+    this.http.get('https://zwykla-historia-default-rtdb.europe-west1.firebasedatabase.app/app/characters/' 
     + this.selectedCharacter + '.json')
     .subscribe(
       (data: CharacterData | any) => {

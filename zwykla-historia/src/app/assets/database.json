@@ -1,0 +1,36 @@
+{"app": {
+    "characters" : {
+      "ermin" : {
+        "name": "Ermin o'Mill",
+        "money" : 0,
+        "history": [
+          {"value": 0, "note": "START", "type": true}
+        ]
+      },
+      "lokkri" : {
+        "name": "Lokkri Baralikson",
+        "money" : 0,
+        "history": [
+          {"value": 0, "note": "START", "type": true}
+        ]
+      },
+      "gustav" : {
+        "name": "Gustav Wolfander",
+        "money" : 0,
+        "history": [
+          {"value": 0, "note": "START", "type": true}
+        ]
+      },
+      "verbena" : {
+        "name": "Verbena Lindemann",
+        "money" : 0,
+        "history": [
+          {"value": 0, "note": "START", "type": true}
+        ]
+      }
+    },
+    "recentQuests": {
+        
+    }
+  }
+}
