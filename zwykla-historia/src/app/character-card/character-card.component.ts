@@ -15,7 +15,6 @@ import { DatabaseCommunicationService } from '../services/database-communication
 })
 export class CharacterCardComponent implements OnInit {
   
-// wydziel pasek górny do części niezmiennej
 // dodaj walidator na ujemny input
 // zablokuj możliwość wysłania zerowego inputu
 // zablokój możliwość wpisania "e"
@@ -51,7 +50,6 @@ export class CharacterCardComponent implements OnInit {
       (data: CharacterData | any) => {
         console.log('new data', data);
         this.characterData = data;
-        // this.moneyAmount = data.money;
         this.isLoading = false;
       }
     )
@@ -67,7 +65,7 @@ export class CharacterCardComponent implements OnInit {
         duration: 3000,
       });
     } else {
-      if(this.selectedCharacter === 'gustav' && operationType) { // zmienić na jakiś enum string z gustavem
+      if(this.selectedCharacter === 'gustav' && operationType) {
         taxForMages = (inputMoneyAmount * 0.1)
         inputMoneyAmount = inputMoneyAmount - taxForMages;
       }
@@ -135,5 +133,4 @@ export class CharacterCardComponent implements OnInit {
       }
     )
   }
-
 }

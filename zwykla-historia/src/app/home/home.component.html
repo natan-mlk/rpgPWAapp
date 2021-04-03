@@ -1,20 +1,11 @@
 
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      <ion-icon name="dice-outline"></ion-icon>
-      Zwykła Historia</ion-title>
-    </ion-toolbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-
-
   <ion-list>
-    <!-- <ion-list-header>
-      Bohaterowie
-    </ion-list-header> -->
-    <h2>Bohaterowie</h2>
     <ion-item color="primary" [routerLink]="['/verbena']">
       <ion-icon slot="start" name="book-outline"></ion-icon>
       <ion-label>Verbena Lindemann</ion-label>
@@ -36,10 +27,24 @@
     </ion-item>
   </ion-list>
 
-  <!-- <ion-button [routerLink]="['/ermin']">ermin</ion-button> -->
-  <!-- <ion-button [routerLink]="['/lokkri']">lokkri</ion-button>
-  <ion-button [routerLink]="['/gustav']">gustav</ion-button>
-  <ion-button [routerLink]="['/verbena']">verbena</ion-button> -->
+  <mat-list>
+    <div mat-subheader>Aktywne questy:</div>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon>folder</mat-icon>
+    <div mat-line>Wyremontować karczme</div>
+    <div mat-line>Zbierać hajs na remont</div>
+    <mat-divider></mat-divider>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon>folder</mat-icon>
+    <div mat-line>Zająć miejsce Mileny</div>
+    <div mat-line>Można spóbować podłożyć świnię, żeby została zegradowana</div>
+    <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+
 </ion-content>
 
 
