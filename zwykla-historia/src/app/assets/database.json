@@ -29,8 +29,9 @@
         ]
       }
     },
-    "recentQuests": {
-        
-    }
+    "recentQuests": [
+      {"name": "Wyremontować karczme", "description": "Dawać hajs na remont"},
+      {"name": "Zająć miejsce Mileny", "description": "Można spóbować podłożyć świnię, żeby została zegradowana"}
+    ]
   }
 }
