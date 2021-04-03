@@ -4,24 +4,9 @@ import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/comm
 import { Avatars } from '../assets/avatars';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-interface CharacterData {
-  name: string,
-  money : number,
-  history: {
-    value: number,
-    type: boolean, 
-    note?: string,
-    tax?: number
-  }[]
-}
-
-interface FormValue {
-  goldValue: number,
-  note: string,
-  pennyValue: number,
-  silverValue: number
-}
+import { FormValue } from './character-card.model';
+import { CharacterData } from './character-card.model';
+import { DatabaseCommunicationService } from '../services/database-communication.service';
 
 @Component({
   selector: 'app-character-card',
@@ -30,17 +15,18 @@ interface FormValue {
 })
 export class CharacterCardComponent implements OnInit {
   
-  // zrób porządek w kodzie
+// wydziel pasek górny do części niezmiennej
 // dodaj walidator na ujemny input
 // zablokuj możliwość wysłania zerowego inputu
 // zablokój możliwość wpisania "e"
 // na stronie głównej "prosty panel - questy aktualne"
 // wersja na kompa? Żeby panel działania był węższy a nie 100% szerkości monitora?
 
+// TODO: money amount is added to display before we know data was sent to database and updated
+
   characterData: CharacterData;
   isLoading: boolean = true;
-  public selectedCharacter: string;
-  private databaseAddr: string = 'https://zwykla-historia-default-rtdb.europe-west1.firebasedatabase.app/';
+  selectedCharacter: string;
   avatarImage: string;
 
   formGroup = new FormGroup({
@@ -53,18 +39,15 @@ export class CharacterCardComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private httpService: DatabaseCommunicationService
   ) { }
 
   ngOnInit() {
-    this.selectedCharacter = this.router.url;
-    this.selectedCharacter = this.selectedCharacter.substring(1);
+    this.selectedCharacter = (this.router.url).substring(1);
     this.setAvatarImage(this.selectedCharacter);
 
-    this.http.get('https://zwykla-historia-default-rtdb.europe-west1.firebasedatabase.app/app/characters/' 
-    + this.selectedCharacter + '.json')
-    .subscribe(
+    this.httpService.getCharacterData(this.selectedCharacter).subscribe(
       (data: CharacterData | any) => {
         console.log('new data', data);
         this.characterData = data;
@@ -74,47 +57,40 @@ export class CharacterCardComponent implements OnInit {
     )
   }
 
-  private setAvatarImage(selectedCharacter){
-    console.log('selectedCharacter', selectedCharacter)
-    for (let item in Avatars) {
-      if(item === selectedCharacter){
-        this.avatarImage = Avatars[item]
-      }
-      console.log('items avatars', Avatars[item])
-      }
-  }
-
-
-  update(operationType: boolean){
+  updateMoneyValue(operationType: boolean){
     const formValue: FormValue = this.formGroup.value;
     let inputMoneyAmount = (formValue.goldValue * 20 * 12) + (formValue.silverValue * 12) + formValue.pennyValue;
     let taxForMages: number = 0;
 
     if(!operationType && (this.characterData.money < inputMoneyAmount)){
-      console.error('ERROR');
       this.snackBar.open('Chesz wydać więcej niż masz!', undefined, {
         duration: 3000,
       });
     } else {
-      // jeśli jest gustav i rodzaj operationType === true, odlicz podatek i utwórz osobną historię 
-
       if(this.selectedCharacter === 'gustav' && operationType) { // zmienić na jakiś enum string z gustavem
         taxForMages = (inputMoneyAmount * 0.1)
-        console.log('TAX - ', taxForMages)
         inputMoneyAmount = inputMoneyAmount - taxForMages;
       }
 
     this.createMoneyHistory(formValue, inputMoneyAmount, operationType, taxForMages);
+    
     let newMoneyAmount = 0;
-
     if (operationType){
-    newMoneyAmount = this.characterData.money + inputMoneyAmount;
+      newMoneyAmount = this.characterData.money + inputMoneyAmount;
     } else {
       newMoneyAmount = this.characterData.money - inputMoneyAmount;
     }
 
     this.characterData.money = newMoneyAmount;
     this.sendToDataBase(newMoneyAmount);
+    }
+  }
+
+  private setAvatarImage(selectedCharacter){
+    for (let item in Avatars) {
+      if(item === selectedCharacter){
+        this.avatarImage = Avatars[item]
+      }
     }
   }
 
@@ -133,10 +109,7 @@ export class CharacterCardComponent implements OnInit {
         'value': operationType ? inputMoney : inputMoney, 
         'type': operationType
       };
-      
     }
-
-    console.log('characterHistoryObj money', characterHistoryObj.value)
 
     if(this.characterData.history.length < 10){
       this.characterData.history.unshift(characterHistoryObj)
@@ -147,16 +120,18 @@ export class CharacterCardComponent implements OnInit {
   }
 
   private sendToDataBase(newMoneyAmount:number) {
-    this.http.patch(
-      this.databaseAddr + 'featuredApp/characters/' + this.selectedCharacter + '/.json', 
-      {
-        "money" : newMoneyAmount,
-        "history": this.characterData.history
-    }
+    this.httpService.patchCharacterData(
+      this.selectedCharacter, this.characterData, newMoneyAmount
     ).subscribe(
       res => {
         console.log('received ok response from patch request');
         this.formGroup.reset();
+      },
+      error => {
+        console.error(error);
+        this.snackBar.open('Błąd połączenia', undefined, {
+          duration: 3000,
+        })
       }
     )
   }

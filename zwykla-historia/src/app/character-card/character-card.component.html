@@ -2,17 +2,16 @@
       <ion-toolbar>
         <ion-title>
           <ion-icon name="dice-outline"></ion-icon>
-          Zwykła Historia</ion-title>
-        </ion-toolbar>
+          Zwykła Historia
+        </ion-title>
+      </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
 
-
 <ion-card *ngIf="!isLoading">
   <img src={{avatarImage}}>
   <ion-card-header>
-    <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
     <ion-card-title>{{characterData.name}}</ion-card-title>
   </ion-card-header>
 
@@ -24,29 +23,6 @@
 
 
     <form [formGroup]="formGroup">
-
-      <!-- <ion-item style="width: 30%; margin-right: 5%; border: 1px grey solid; border-radius: 5px;">
-        <ion-label position="floating">
-          Korony
-        </ion-label>
-        <ion-input autocomplete="off" type="number" formControlName="goldValue"></ion-input>
-      </ion-item>
-
-      <ion-item style="width: 30%; margin-right: 5%; border: 1px grey solid; border-radius: 5px;">
-        <ion-label position="floating">
-          Szylingi
-        </ion-label>
-        <ion-input autocomplete="off" type="number" formControlName="silverValue"></ion-input>
-      </ion-item>
-
-      <ion-item style="width: 30%; margin-right: 5%; border: 1px grey solid; border-radius: 5px;">
-        <ion-label position="floating">
-          Pensy
-        </ion-label>
-        <ion-input autocomplete="off" type="number" formControlName="pennyValue"></ion-input>
-      </ion-item> -->
-
-
       <mat-form-field appearance="outline" style="width: 30%; margin-right: 5%;">
         <mat-label>Korony</mat-label>
         <input autocomplete="off" 
@@ -71,18 +47,17 @@
         placeholder="pensy">
       </mat-form-field>
 
-
       <mat-form-field appearance="outline" style="width: 65%;">
         <mat-label>Notka</mat-label>
         <textarea matInput
         formControlName="note" 
         placeholder="notatka"></textarea>
       </mat-form-field>
-
     </form>
+
     <div style="display: flex; flex-direction: row-reverse;">
-    <button mat-fab color="primary" style="font-size: 30px;" (click)="update(true)"><span style="color: white">+</span></button>
-    <button mat-fab color="warn" style="font-size: 30px; margin-right: 25px;" (click)="update(false)"><span style="color: white">-</span></button>
+      <button mat-fab color="primary" style="font-size: 30px;" (click)="updateMoneyValue(true)"><span style="color: white">+</span></button>
+      <button mat-fab color="warn" style="font-size: 30px; margin-right: 25px;" (click)="updateMoneyValue(false)"><span style="color: white">-</span></button>
     </div>
 
     

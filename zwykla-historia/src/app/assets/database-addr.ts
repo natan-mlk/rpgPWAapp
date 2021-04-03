@@ -1,0 +1,2 @@
+export const databaseAddr: string = 'https://zwykla-historia-default-rtdb.europe-west1.firebasedatabase.app/';
+export const databaseAddrCharacters: string = 'https://zwykla-historia-default-rtdb.europe-west1.firebasedatabase.app/app/characters/';
