@@ -54,8 +54,12 @@
     </form>
 
     <div style="display: flex; flex-direction: row-reverse;">
-      <button mat-fab color="primary" style="font-size: 30px;" (click)="updateMoneyValue(true)"><span style="color: white">+</span></button>
-      <button mat-fab color="warn" style="font-size: 30px; margin-right: 25px;" (click)="updateMoneyValue(false)"><span style="color: white">-</span></button>
+      <button [disabled]="!canSendData" mat-fab color="primary" style="font-size: 30px;" (click)="updateMoneyValue(true)">
+        <span style="color: white">+</span>
+      </button>
+      <button [disabled]="!canSendData" mat-fab color="warn" style="font-size: 30px; margin-right: 25px;" (click)="updateMoneyValue(false)">
+        <span style="color: white">-</span>
+      </button>
     </div>
 
     

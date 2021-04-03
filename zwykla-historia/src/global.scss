@@ -38,6 +38,10 @@
     padding-bottom: 0.4em;
 }
 
+.mat-fab.mat-warn.mat-button-disabled, .mat-fab.mat-button-disabled.mat-button-disabled {
+  background-color: #969696 !important;
+}
+
 // .mat-form-field-appearance-outline .mat-form-field-outline-start, 
 // .mat-form-field-appearance-outline .mat-form-field-outline-end {
 //     border: 1px solid red !important;
@@ -89,32 +93,32 @@ $fontConfig: (
 
 // Foreground Elements
 
-// // Light Theme Text
-// $dark-text: #000000;
-// $dark-primary-text: rgba($dark-text, 0.87);
-// $dark-accent-text: rgba($dark-primary-text, 0.54);
-// $dark-disabled-text: rgba($dark-primary-text, 0.38);
-// $dark-dividers: rgba($dark-primary-text, 0.12);
-// $dark-focused: rgba($dark-primary-text, 0.12);
+// Light Theme Text
+$dark-text: #000000;
+$dark-primary-text: rgba($dark-text, 0.87);
+$dark-accent-text: rgba($dark-primary-text, 0.54);
+$dark-disabled-text: rgba($dark-primary-text, 0.38);
+$dark-dividers: rgba($dark-primary-text, 0.12);
+$dark-focused: rgba($dark-primary-text, 0.12);
 
-// $mat-light-theme-foreground: (
-//   base:              black,
-//   divider:           $dark-dividers,
-//   dividers:          $dark-dividers,
-//   disabled:          $dark-disabled-text,
-//   disabled-button:   rgba($dark-text, 0.26),
-//   disabled-text:     $dark-disabled-text,
-//   elevation:         black,
-//   secondary-text:    $dark-accent-text,
-//   hint-text:         $dark-disabled-text,
-//   accent-text:       $dark-accent-text,
-//   icon:              $dark-accent-text,
-//   icons:             $dark-accent-text,
-//   text:              $dark-primary-text,
-//   slider-min:        $dark-primary-text,
-//   slider-off:        rgba($dark-text, 0.26),
-//   slider-off-active: $dark-disabled-text,
-// );
+$mat-light-theme-foreground: (
+  base:              black,
+  divider:           $dark-dividers,
+  dividers:          $dark-dividers,
+  disabled:          $dark-disabled-text,
+  disabled-button:   rgba($dark-text, 0.26),
+  disabled-text:     $dark-disabled-text,
+  elevation:         black,
+  secondary-text:    $dark-accent-text,
+  hint-text:         $dark-disabled-text,
+  accent-text:       $dark-accent-text,
+  icon:              $dark-accent-text,
+  icons:             $dark-accent-text,
+  text:              $dark-primary-text,
+  slider-min:        $dark-primary-text,
+  slider-off:        rgba($dark-text, 0.26),
+  slider-off-active: $dark-disabled-text,
+);
 
 // Dark Theme text
 // $light-text: #7e3fa8;

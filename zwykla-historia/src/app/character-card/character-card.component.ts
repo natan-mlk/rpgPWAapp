@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Avatars } from '../assets/avatars';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormValue } from './character-card.model';
 import { CharacterData } from './character-card.model';
 import { DatabaseCommunicationService } from '../services/database-communication.service';
+import { Subscription } from 'rxjs';
+import { isPositiveNumberValidator } from '../assets/validators';
 
 @Component({
   selector: 'app-character-card',
   templateUrl: './character-card.component.html',
   styleUrls: ['./character-card.component.scss'],
 })
-export class CharacterCardComponent implements OnInit {
+export class CharacterCardComponent implements OnInit, OnDestroy {
   
-// dodaj walidator na ujemny input
 // zablokuj możliwość wysłania zerowego inputu
 // zablokój możliwość wpisania "e"
-// na stronie głównej "prosty panel - questy aktualne"
 // wersja na kompa? Żeby panel działania był węższy a nie 100% szerkości monitora?
 
 // TODO: money amount is added to display before we know data was sent to database and updated
@@ -27,11 +27,15 @@ export class CharacterCardComponent implements OnInit {
   isLoading: boolean = true;
   selectedCharacter: string;
   avatarImage: string;
+  formStatusSubscription: Subscription = Subscription.EMPTY;
+  
+
+  canSendData: boolean = false;
 
   formGroup = new FormGroup({
-    goldValue: new FormControl(),
-    silverValue: new FormControl(), 
-    pennyValue: new FormControl(),
+    goldValue: new FormControl(null, isPositiveNumberValidator.bind(this)),
+    silverValue: new FormControl(null, isPositiveNumberValidator.bind(this)), 
+    pennyValue: new FormControl(null, isPositiveNumberValidator.bind(this)),
     note: new FormControl(),
   })
 
@@ -51,6 +55,24 @@ export class CharacterCardComponent implements OnInit {
         console.log('new data', data);
         this.characterData = data;
         this.isLoading = false;
+      }
+    )
+    this.setFormWatcher();
+  }
+
+  ngOnDestroy() {
+    this.formStatusSubscription.unsubscribe();
+  }
+
+  private setFormWatcher() {
+    this.formStatusSubscription = this.formGroup.statusChanges.subscribe(
+      status => {
+        console.log('STATUS', status);
+        if(status === 'INVALID') {
+          this.canSendData = false;
+        } else {
+          this.canSendData = true;
+        }
       }
     )
   }
