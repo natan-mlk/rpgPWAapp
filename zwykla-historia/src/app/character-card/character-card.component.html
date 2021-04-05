@@ -82,14 +82,14 @@
         <ion-icon *ngIf="!history.type" style="color: rgb(189, 44, 0)" slot="start" name="trending-down-outline"></ion-icon>
         <ion-label>
           <span>
-            ZK: {{history.value | GoldenCrownsPipe}},
-            Szyl: {{ history.value | SilverPipe}},
-            Pens: {{ history.value | PennyPipe}} 
+            ZK: <b>{{history.value | GoldenCrownsPipe}}</b>,
+            Szyl: <b>{{ history.value | SilverPipe}}</b>,
+            Pens: <b>{{ history.value | PennyPipe}}</b> 
           </span><br>
           <ng-container *ngIf="selectedCharacter === 'gustav' && history.type">
             <span style="font-size: 15px;">
-              Podatek: 
-              {{(history.tax | GoldenCrownsPipe) + '.' + (history.tax | SilverPipe) + '.' + (history.tax | PennyPipe)}}
+              Podatek: ZK: 
+              {{(history.tax | GoldenCrownsPipe) + ', Sz: ' + (history.tax | SilverPipe) + ', P: ' + (history.tax | PennyPipe)}}
             </span><br>
           </ng-container>
           <span>Notka: <i>{{history.note}}</i></span>

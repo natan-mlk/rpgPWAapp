@@ -26,10 +26,10 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
-// ionic overwites
+// ionic overwrites
 .item .sc-ion-label-md-h {
     overflow: visible;
-    white-space: normal;
+    white-space: pre-line;
     line-height: 1.2;
 }
 
@@ -40,6 +40,11 @@
 
 .mat-fab.mat-warn.mat-button-disabled, .mat-fab.mat-button-disabled.mat-button-disabled {
   background-color: #969696 !important;
+}
+
+.mat-list-base .mat-list-item .mat-line {
+  white-space: pre-line !important; 
+  overflow: visible !important;
 }
 
 // .mat-form-field-appearance-outline .mat-form-field-outline-start, 
