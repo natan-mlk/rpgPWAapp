@@ -98,7 +98,7 @@ export class CharacterCardComponent implements OnInit, OnDestroy {
       });
     } else {
       if(this.selectedCharacter === 'gustav' && operationType) {
-        taxForMages = (inputMoneyAmount * 0.1)
+        taxForMages = this.countTax(inputMoneyAmount);
         inputMoneyAmount = inputMoneyAmount - taxForMages;
       }
 
@@ -114,6 +114,13 @@ export class CharacterCardComponent implements OnInit, OnDestroy {
     this.characterData.money = newMoneyAmount;
     this.sendToDataBase(newMoneyAmount);
     }
+  }
+
+  private countTax(inputMoneyAmount): number{
+    if (inputMoneyAmount < 10) {
+      return 0;
+    }
+    return Math.round(inputMoneyAmount * 0.1);
   }
 
   private setAvatarImage(selectedCharacter){
