@@ -31,9 +31,9 @@ export class CharacterCardComponent implements OnInit, OnDestroy {
   isAtLeastOneFilled: boolean = false;
 
   formGroup = new FormGroup({
-    goldValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator.bind(this)]),
-    silverValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator.bind(this)]), 
-    pennyValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator.bind(this)]),
+    goldValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator()]),
+    silverValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator()]), 
+    pennyValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator()]),
     note: new FormControl(),
   })
 
@@ -84,7 +84,6 @@ export class CharacterCardComponent implements OnInit, OnDestroy {
         }
       }
     )
-
   }
 
   updateMoneyValue(operationType: boolean){
