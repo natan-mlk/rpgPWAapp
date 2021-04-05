@@ -39,10 +39,12 @@ export class QuestListComponent implements OnInit {
   private openDialog(quest: QuestData) {
     const dialogRef = this.dialog.open(QuestDeleteConfirmComponent);
     dialogRef.componentInstance.quest = quest;
+    dialogRef.componentInstance.questsList = this.questsList;
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('close result: ', result)
       if(result) {
-        this.removeQuestFromList(quest);
+        this.getQuestsData();
       }
     });
   }

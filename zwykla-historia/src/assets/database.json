@@ -30,10 +30,11 @@
       }
     },
     "recentQuests": [
-      {"id": 1, "name": "Wyremontować karczme", "description": "Dawać hajs na remont"},
-      {"id": 2, "name": "Zająć miejsce Mileny", "description": "Można spóbować podłożyć świnię, żeby została zegradowana"},
+      {"id": 1, "name": "11111", "description": "Dawać hajs na remont"},
+      {"id": 2, "name": "222222", "description": "Można spóbować podłożyć świnię, żeby została zegradowana"},
       {"id": 3, "name": "333", "description": "Dawać hajs na remont"},
       {"id": 4, "name": "4444", "description": "Dawać hajs na remont"}
-    ]
+    ],
+    "idCounter": 5
   }
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { databaseAddr, databaseAddrCharacters } from '../assets/database-addr';
 import { CharacterData } from '../character-card/character-card.model';
+import { QuestData } from '../quest-list/quest-list.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,12 @@ export class DatabaseCommunicationService {
 
     getQuestsData(): Observable<any> {
       return this.http.get(databaseAddr + 'app/recentQuests.json');
+    }
+
+    patchQuestsData(updatedQuestsList): Observable<any> {
+      return this.http.patch(
+        databaseAddr + 'app/.json',
+        updatedQuestsList
+        )
     }
 }

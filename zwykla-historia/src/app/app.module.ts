@@ -16,6 +16,7 @@ import { CharacterCardComponent } from './character-card/character-card.componen
 import { HttpClientModule } from '@angular/common/http';
 import { GoldenCrownsPipe, PennyPipe, SilverPipe } from './assets/pipes';
 import { QuestListComponent } from './quest-list/quest-list.component';
+import { QuestDeleteConfirmComponent } from './quest-list/quest-delete-confirm/quest-delete-confirm.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { QuestListComponent } from './quest-list/quest-list.component';
     HomeComponent,
     CharacterCardComponent,
     QuestListComponent,
+    QuestDeleteConfirmComponent,
     GoldenCrownsPipe,
     SilverPipe,
     PennyPipe,
