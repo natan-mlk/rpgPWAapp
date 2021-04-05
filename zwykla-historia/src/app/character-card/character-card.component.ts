@@ -16,6 +16,7 @@ import { isPositiveNumberValidator, isNotIntegerValidator } from '../assets/vali
 })
 export class CharacterCardComponent implements OnInit, OnDestroy {
   
+// podatek gustava źle odlicza się od np 1 pensa. Zrobić tak, żeby był pobierany dopiero od 10 pensów
 // wersja na kompa? Żeby panel działania był węższy a nie 100% szerkości monitora?
 
 // TODO: money amount is added to display before we know data was sent to database and updated

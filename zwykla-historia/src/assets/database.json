@@ -18,7 +18,7 @@
         "name": "Gustav Wolfander",
         "money" : 0,
         "history": [
-          {"value": 0, "note": "START", "type": true}
+          {"value": 0, "note": "START", "type": true, "tax": 0}
         ]
       },
       "verbena" : {
