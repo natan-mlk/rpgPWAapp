@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { CharacterCardComponent } from './character-card/character-card.component';
 import { HttpClientModule } from '@angular/common/http';
 import { GoldenCrownsPipe, PennyPipe, SilverPipe } from './assets/pipes';
+import { QuestListComponent } from './quest-list/quest-list.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { GoldenCrownsPipe, PennyPipe, SilverPipe } from './assets/pipes';
     AppComponent,
     HomeComponent,
     CharacterCardComponent,
+    QuestListComponent,
     GoldenCrownsPipe,
     SilverPipe,
     PennyPipe,

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { databaseAddrCharacters } from '../assets/database-addr';
+import { databaseAddr, databaseAddrCharacters } from '../assets/database-addr';
 import { CharacterData } from '../character-card/character-card.model';
 
 @Injectable({
@@ -27,4 +27,7 @@ export class DatabaseCommunicationService {
       )
     }
 
+    getQuestsData(): Observable<any> {
+      return this.http.get(databaseAddr + 'app/recentQuests.json');
+    }
 }

@@ -1,0 +1,21 @@
+<button mat-fab color="primary" (click)="saveQuests()">TEST</button>
+<mat-list>
+  <div mat-subheader>Aktywne questy:</div>
+
+  <!-- <mat-list-item *ngFor="let quest of questsList">
+    <mat-icon mat-list-icon>folder</mat-icon>
+  <div mat-line>{{quest.name}}</div>
+  <div mat-line>{{quest.description}}</div>
+  <mat-divider></mat-divider>
+  </mat-list-item> -->
+
+  <div *ngFor="let quest of questsList">
+    <mat-icon mat-list-icon (click)="deleteQuest(quest)">folder</mat-icon>
+  <div mat-line>{{quest.name}}</div>
+  <div mat-line>{{quest.description}}</div>
+  <mat-icon mat-list-icon (click)="deleteQuest(quest)">remove</mat-icon>
+
+  <mat-divider></mat-divider>
+  </div>
+
+</mat-list>
