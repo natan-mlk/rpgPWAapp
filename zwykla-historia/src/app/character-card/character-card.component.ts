@@ -1,14 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Avatars } from '../assets/avatars';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormValue } from './character-card.model';
 import { CharacterData } from './character-card.model';
 import { DatabaseCommunicationService } from '../services/database-communication.service';
 import { Subscription } from 'rxjs';
-import { isPositiveNumberValidator } from '../assets/validators';
+import { isPositiveNumberValidator, isNotIntegerValidator } from '../assets/validators';
 
 @Component({
   selector: 'app-character-card',
@@ -17,8 +16,6 @@ import { isPositiveNumberValidator } from '../assets/validators';
 })
 export class CharacterCardComponent implements OnInit, OnDestroy {
   
-// zablokuj możliwość wysłania zerowego inputu
-// zablokój możliwość wpisania "e"
 // wersja na kompa? Żeby panel działania był węższy a nie 100% szerkości monitora?
 
 // TODO: money amount is added to display before we know data was sent to database and updated
@@ -27,15 +24,16 @@ export class CharacterCardComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   selectedCharacter: string;
   avatarImage: string;
-  formStatusSubscription: Subscription = Subscription.EMPTY;
+  private formStatusSubscription: Subscription = Subscription.EMPTY;
+  private formValueSubscription: Subscription = Subscription.EMPTY;
   
-
-  canSendData: boolean = false;
+  isFormValid: boolean = false;
+  isAtLeastOneFilled: boolean = false;
 
   formGroup = new FormGroup({
-    goldValue: new FormControl(null, isPositiveNumberValidator.bind(this)),
-    silverValue: new FormControl(null, isPositiveNumberValidator.bind(this)), 
-    pennyValue: new FormControl(null, isPositiveNumberValidator.bind(this)),
+    goldValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator.bind(this)]),
+    silverValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator.bind(this)]), 
+    pennyValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator.bind(this)]),
     note: new FormControl(),
   })
 
@@ -52,7 +50,6 @@ export class CharacterCardComponent implements OnInit, OnDestroy {
 
     this.httpService.getCharacterData(this.selectedCharacter).subscribe(
       (data: CharacterData | any) => {
-        console.log('new data', data);
         this.characterData = data;
         this.isLoading = false;
       }
@@ -62,19 +59,32 @@ export class CharacterCardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.formStatusSubscription.unsubscribe();
+    this.formValueSubscription.unsubscribe();
   }
 
   private setFormWatcher() {
     this.formStatusSubscription = this.formGroup.statusChanges.subscribe(
       status => {
-        console.log('STATUS', status);
         if(status === 'INVALID') {
-          this.canSendData = false;
+          this.isFormValid = false;
         } else {
-          this.canSendData = true;
+          this.isFormValid = true;
         }
       }
     )
+    this.formValueSubscription = this.formGroup.valueChanges.subscribe(
+      value => {
+        const goldValue = this.formGroup.get('goldValue').value;
+        const silverValue = this.formGroup.get('silverValue').value;
+        const pennyValue = this.formGroup.get('pennyValue').value;
+        if (goldValue || silverValue || pennyValue) {
+          this.isAtLeastOneFilled = true;
+        } else {
+          this.isAtLeastOneFilled = false;
+        }
+      }
+    )
+
   }
 
   updateMoneyValue(operationType: boolean){

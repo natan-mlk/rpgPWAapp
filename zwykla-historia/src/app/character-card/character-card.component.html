@@ -27,7 +27,10 @@
         type="number" matInput
         formControlName="goldValue" 
         placeholder="korony">
-      </mat-form-field>
+        <mat-error *ngIf="formGroup.get('goldValue').hasError('isLessThanZero') || formGroup.get('goldValue').hasError('isNotInteger')">
+          Nie wygłupiaj się
+        </mat-error>
+      </mat-form-field> 
 
       <mat-form-field appearance="outline" style="width: 30%; margin-right: 5%;">
         <mat-label>Szylingi</mat-label>
@@ -35,6 +38,9 @@
         type="number" matInput
         formControlName="silverValue" 
         placeholder="szylingi">
+        <mat-error *ngIf="formGroup.get('silverValue').hasError('isLessThanZero') || formGroup.get('silverValue').hasError('isNotInteger')">
+          Nie wygłupiaj się
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="width: 30%;">
@@ -43,6 +49,9 @@
         type="number" matInput
         formControlName="pennyValue" 
         placeholder="pensy">
+        <mat-error *ngIf="formGroup.get('pennyValue').hasError('isLessThanZero') || formGroup.get('pennyValue').hasError('isNotInteger')">
+          Nie wygłupiaj się
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="width: 65%;">
@@ -54,10 +63,10 @@
     </form>
 
     <div style="display: flex; flex-direction: row-reverse;">
-      <button [disabled]="!canSendData" mat-fab color="primary" style="font-size: 30px;" (click)="updateMoneyValue(true)">
+      <button [disabled]="!(isFormValid && isAtLeastOneFilled)" mat-fab color="primary" style="font-size: 30px;" (click)="updateMoneyValue(true)">
         <span style="color: white">+</span>
       </button>
-      <button [disabled]="!canSendData" mat-fab color="warn" style="font-size: 30px; margin-right: 25px;" (click)="updateMoneyValue(false)">
+      <button [disabled]="!(isFormValid && isAtLeastOneFilled)" mat-fab color="warn" style="font-size: 30px; margin-right: 25px;" (click)="updateMoneyValue(false)">
         <span style="color: white">-</span>
       </button>
     </div>
