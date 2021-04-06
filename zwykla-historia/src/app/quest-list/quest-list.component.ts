@@ -26,7 +26,6 @@ export class QuestListComponent implements OnInit {
   getQuestsData(){
     this.httpService.getQuestsData().subscribe(
       (quests: QuestData[]) => {
-        console.log('quests', quests)
         this.questsList = quests;
       }
     )
@@ -38,7 +37,6 @@ export class QuestListComponent implements OnInit {
     dialogRef.componentInstance.questsList = this.questsList;
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('close result: ', result)
       if(result) {
         this.getQuestsData();
       }
@@ -56,16 +54,5 @@ export class QuestListComponent implements OnInit {
       }
     });
   }
-
-  // private removeQuestFromList(quest: QuestData){
-  //   this.questsList = this.questsList.filter((questFromList: QuestData) => {
-  //     return questFromList.id !== quest.id
-  //   })
-  // }
-
-  private updateDatabase() {
-
-  }
-
 
 }

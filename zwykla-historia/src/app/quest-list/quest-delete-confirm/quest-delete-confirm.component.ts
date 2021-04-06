@@ -28,10 +28,8 @@ export class QuestDeleteConfirmComponent implements OnInit {
     this.questsList = this.questsList.filter((questFromList: QuestData) => {
       return questFromList.id !== this.quest.id
     })
-    const test = {recentQuests: this.questsList}
-    console.log('questsList', this.questsList);
-    const questsListJSON = JSON.stringify(test);
-    console.log('questsListJSON', questsListJSON);
+    const tempObjRecentQuests = {recentQuests: this.questsList}
+    const questsListJSON = JSON.stringify(tempObjRecentQuests);
 
     this.databaseService.patchQuestsData(questsListJSON).subscribe( result => {
       if(result) {
