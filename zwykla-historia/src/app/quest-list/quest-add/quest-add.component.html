@@ -1,0 +1,24 @@
+<form [formGroup]="formGroup">
+  <mat-form-field appearance="outline">
+    <mat-label>Quest</mat-label>
+    <textarea matInput autocomplete="off" type="text" formControlName="name" placeholder="Quest"></textarea>
+    <!-- <mat-error
+      *ngIf="formGroup.get('goldValue').hasError('isLessThanZero') || formGroup.get('goldValue').hasError('isNotInteger')">
+      Nie wygłupiaj się
+    </mat-error> -->
+  </mat-form-field>
+<br>
+  <mat-form-field appearance="outline">
+    <mat-label>Opis</mat-label>
+    <textarea matInput autocomplete="off" type="text" formControlName="description" placeholder="Opis"></textarea>
+    <!-- <mat-error
+      *ngIf="formGroup.get('goldValue').hasError('isLessThanZero') || formGroup.get('goldValue').hasError('isNotInteger')">
+      Nie wygłupiaj się
+    </mat-error> -->
+  </mat-form-field>
+
+
+</form>
+
+<button mat-button (click)="closeDialog()">Anuluj</button>
+<button mat-button (click)="addQuest()">Anuluj</button>
