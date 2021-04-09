@@ -47,6 +47,11 @@
   overflow: visible !important;
 }
 
+.mat-button.list-item__button {
+  padding: 0 10px;
+  min-width: 25px;
+}
+
 // .mat-form-field-appearance-outline .mat-form-field-outline-start, 
 // .mat-form-field-appearance-outline .mat-form-field-outline-end {
 //     border: 1px solid red !important;

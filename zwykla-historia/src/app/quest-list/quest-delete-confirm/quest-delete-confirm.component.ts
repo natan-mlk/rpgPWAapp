@@ -30,6 +30,7 @@ export class QuestDeleteConfirmComponent implements OnInit {
     })
     const tempObjRecentQuests = {recentQuests: this.questsList}
     const questsListJSON = JSON.stringify(tempObjRecentQuests);
+    console.log('Recent Quests from delete', tempObjRecentQuests)
 
     this.databaseService.patchQuestsData(questsListJSON).subscribe( result => {
       if(result) {
@@ -39,22 +40,3 @@ export class QuestDeleteConfirmComponent implements OnInit {
   }
 
 }
-    // {
-    //   "recentQuests" : [ {
-    //     "description" : "Dawać hajs na remont",
-    //     "id" : 1,
-    //     "name" : "1111111111"
-    //   }, {
-    //     "description" : "Można spóbować podłożyć świnię, żeby została zegradowana",
-    //     "id" : 2,
-    //     "name" : "222222222"
-    //   }, {
-    //     "description" : "Dawać hajs na remont",
-    //     "id" : 3,
-    //     "name" : "333"
-    //   }, {
-    //     "description" : "Dawać hajs na remont",
-    //     "id" : 4,
-    //     "name" : "4444"
-    //   } ]
-    // }

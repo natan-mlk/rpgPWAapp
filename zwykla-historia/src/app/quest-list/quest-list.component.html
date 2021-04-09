@@ -1,16 +1,23 @@
 <mat-list>
-  <div class="list-header"><span>Aktywne questy:</span><button mat-raised-button  (click)="openAddQuestsDialog()">Nowy</button>
+  <div class="list-header">
+    <span>Aktywne questy:</span>
+    <button mat-stroked-button (click)="openAddQuestsDialog()">Nowy</button>
   </div>
   <div *ngFor="let quest of questsList">
     <div class="list-item__wrapper">
-      <div>
+      <div style="padding-right: 10px;">
         <div mat-line><b>{{quest.name}}</b></div>
         <div mat-line>{{quest.description}}</div>
       </div>
 
-      <button mat-button (click)="openDeleteDialog(quest)">
-        <mat-icon style="height: 20px; width: 20px;font-size: 20px;" mat-list-icon>delete</mat-icon>
-      </button>
+      <div style="display: flex; align-items: flex-start;">
+        <button mat-button (click)="openDeleteDialog(quest)" class="list-item__button">
+          <mat-icon style="height: 20px; width: 20px; font-size: 20px;" mat-list-icon>edit</mat-icon>
+        </button>
+        <button mat-button (click)="openDeleteDialog(quest)" class="list-item__button">
+          <mat-icon style="height: 20px; width: 20px; font-size: 20px;" mat-list-icon>delete</mat-icon>
+        </button>
+      </div>
     </div>
 
     <mat-divider></mat-divider>

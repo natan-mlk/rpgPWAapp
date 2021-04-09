@@ -13,6 +13,7 @@ import { QuestAddComponent } from './quest-add/quest-add.component';
 export class QuestListComponent implements OnInit {
 
   questsList: QuestData[] = [];
+  currentId: number;
 
   constructor(
     private httpService: DatabaseCommunicationService,
@@ -24,9 +25,11 @@ export class QuestListComponent implements OnInit {
   }
 
   getQuestsData(){
-    this.httpService.getQuestsData().subscribe(
-      (quests: QuestData[]) => {
-        this.questsList = quests;
+    this.httpService.getQuestsAndId()
+    .subscribe(
+      (quests: [QuestData[], number]) => {
+        this.questsList = quests[0];
+        this.currentId = quests[1];
       }
     )
   }
@@ -46,6 +49,7 @@ export class QuestListComponent implements OnInit {
   openAddQuestsDialog() {
     const dialogRef = this.dialog.open(QuestAddComponent);
     dialogRef.componentInstance.questsList = this.questsList;
+    dialogRef.componentInstance.currentId = this.currentId;
     
     dialogRef.afterClosed().subscribe(result => {
       console.log('close result: ', result)

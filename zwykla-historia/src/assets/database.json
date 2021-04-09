@@ -35,6 +35,6 @@
       {"id": 3, "name": "333", "description": "Dawać hajs na remont"},
       {"id": 4, "name": "4444", "description": "Dawać hajs na remont"}
     ],
-    "idCounter": 5
+    "idCounter": 4
   }
 }

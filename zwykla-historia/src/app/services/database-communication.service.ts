@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import { databaseAddr, databaseAddrCharacters } from '../assets/database-addr';
 import { CharacterData } from '../character-card/character-card.model';
 import { QuestData } from '../quest-list/quest-list.model';
@@ -30,6 +30,14 @@ export class DatabaseCommunicationService {
 
     getQuestsData(): Observable<any> {
       return this.http.get(databaseAddr + 'app/recentQuests.json');
+    }
+
+    getQuestsLastId(): Observable<any> {
+      return this.http.get(databaseAddr + 'app/idCounter.json');
+    }
+
+    getQuestsAndId(){
+      return zip(this.getQuestsData(), this.getQuestsLastId());
     }
 
     patchQuestsData(updatedQuestsList): Observable<any> {

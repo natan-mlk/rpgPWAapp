@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { DatabaseCommunicationService } from 'src/app/services/database-communication.service';
 import { QuestData } from '../quest-list.model';
 
+
 @Component({
   selector: 'app-quest-add',
   templateUrl: './quest-add.component.html',
@@ -12,7 +13,9 @@ import { QuestData } from '../quest-list.model';
 })
 export class QuestAddComponent implements OnInit, OnDestroy {
   
-  @Input()questsList: QuestData[];
+  @Input()questsList: QuestData[] = [];
+  @Input()currentId: number;
+
   private formStatusSubscription: Subscription = Subscription.EMPTY;
   isFormValid: boolean = false;
 
@@ -46,19 +49,31 @@ export class QuestAddComponent implements OnInit, OnDestroy {
 
   addQuest() {
     const newQuest = this.formGroup.value;
-    newQuest.id = 5;
-    this.questsList.unshift(newQuest);
-    console.log('questsList', this.questsList);
+    newQuest.id = this.currentId + 1;
 
-    const tempObjRecentQuests = {recentQuests: this.questsList}
-    const questsListJSON = JSON.stringify(tempObjRecentQuests);
-    console.log('questsListJSON', questsListJSON);
+    if(this.questsList){
+      this.questsList.unshift(newQuest);
+      const tempObjRecentQuests = {recentQuests: this.questsList, idCounter: this.currentId + 1}
+      const questsListJSON = JSON.stringify(tempObjRecentQuests);
 
-    this.databaseService.patchQuestsData(questsListJSON).subscribe( result => {
-      if(result) {
-        this.dialogRef.close(true);
-      }
-    })
+      this.databaseService.patchQuestsData(questsListJSON)
+      .subscribe( result => {
+        if(result) {
+          this.dialogRef.close(true);
+        }
+      })
+    } else {
+      const tempObjRecentQuests = {recentQuests: [newQuest], idCounter: this.currentId + 1};
+      const questsListJSON = JSON.stringify(tempObjRecentQuests);
+
+      this.databaseService.patchQuestsData(questsListJSON)
+      .subscribe( result => {
+        if(result) {
+          this.dialogRef.close(true);
+        }
+      })
+
+    }
   }
   
   ngOnDestroy() {
