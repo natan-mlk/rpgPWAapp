@@ -1,13 +1,19 @@
-<mat-list>
+<ion-card-content>
+  <mat-list>
   <div class="list-header">
     <span>Aktywne questy:</span>
-    <button mat-stroked-button (click)="openAddQuestsDialog()">Nowy</button>
+    <!-- <button mat-stroked-button (click)="openAddQuestsDialog()" class="list-header__button">Nowy</button> -->
+    <!-- <ion-button fill="outline" (click)="openAddQuestsDialog()">Nowy</ion-button> -->
+    <ion-chip (click)="openAddQuestsDialog()" color="primary" outline="true">
+      <ion-label>Nowy</ion-label>
+    </ion-chip>
   </div>
   <div *ngFor="let quest of questsList">
+        <mat-divider></mat-divider>
     <div class="list-item__wrapper">
       <div style="padding-right: 10px;">
         <div mat-line><b>{{quest.name}}</b></div>
-        <div mat-line>{{quest.description}}</div>
+        <div mat-line><ion-note>{{quest.description}}</ion-note></div>
       </div>
 
       <div style="display: flex; align-items: flex-start;">
@@ -20,7 +26,8 @@
       </div>
     </div>
 
-    <mat-divider></mat-divider>
+
   </div>
 
 </mat-list>
+</ion-card-content>

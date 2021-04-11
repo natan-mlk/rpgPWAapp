@@ -1,6 +1,16 @@
-<p>
-  Czy skasować "{{quest.name}}"?
-</p>
+<mat-dialog-content>
+  <ion-text style="color: #413f3f"><h3>Czy skasować quest <b>"{{quest.name}}"</b>?</h3></ion-text>
+  <!-- <ion-item>
+    <ion-label class="ion-text-wrap">
+    Multiline text that should wrap when it is too long
+    to fit on one line in the item.
+    </ion-label>
+  </ion-item> -->
+</mat-dialog-content>
 
-<button mat-button (click)="closeDialog()">NIE</button>
-<button mat-button (click)="confirm()">TAK</button>
+
+<mat-dialog-actions style="justify-content: space-around;">
+  <ion-button color="warning" (click)="closeDialog()">NIE</ion-button>
+  <ion-button color="primary" (click)="confirm()">TAK</ion-button>
+</mat-dialog-actions>
+

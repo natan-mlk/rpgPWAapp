@@ -18,12 +18,8 @@ export class QuestAddComponent implements OnInit, OnDestroy {
 
   private formStatusSubscription: Subscription = Subscription.EMPTY;
   isFormValid: boolean = false;
-
-  formGroup = new FormGroup({
-    name: new FormControl(null, Validators.required),
-    description: new FormControl(null), 
-    id: new FormControl(null),
-  })
+  isFormInitiated: boolean = false; 
+  formGroup;
 
   constructor(
     public dialogRef: MatDialogRef<QuestAddComponent>,
@@ -31,6 +27,14 @@ export class QuestAddComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.formGroup = new FormGroup({
+      name: new FormControl(null, [Validators.required, 
+        // Validators.minLength[3] // dorzucenie tego walidatora rozwala mi widok, lecą błędy. Czemu?
+      ]),
+      description: new FormControl(null), 
+      id: new FormControl(null),
+    })
+
     this.formStatusSubscription = this.formGroup.statusChanges.subscribe(
       status => {
         console.log('form status - ', status)
@@ -41,6 +45,8 @@ export class QuestAddComponent implements OnInit, OnDestroy {
         }
       }
     )
+
+    this.isFormInitiated = true;
   }
 
   closeDialog() {

@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 .list-item__wrapper {
@@ -9,3 +10,8 @@
     justify-content: space-between;
     padding: 10px 0;
 }
+
+.list-header__button{
+    color: #3880ff;
+}
+

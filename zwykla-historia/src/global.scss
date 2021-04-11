@@ -28,9 +28,9 @@
 
 // ionic overwrites
 .item .sc-ion-label-md-h {
-    overflow: visible;
-    white-space: pre-line;
-    line-height: 1.2;
+    // overflow: visible;
+    // white-space: pre-line;
+    // line-height: 1.2;
 }
 
 // material overwrites
@@ -195,7 +195,9 @@ $mat-light-theme-background: (
 );
 
 // Dark bg
-$dark-background:     #2c2c2c;
+// $dark-background:     #707070;
+$dark-background:     #b9b9b9;
+// $dark-background:     #2c2c2c;
 $dark-bg-lighter-5:   lighten($dark-background, 5%);
 $dark-bg-lighter-10:  lighten($dark-background, 10%);
 $dark-bg-lighter-20:  lighten($dark-background, 20%);
@@ -228,7 +230,9 @@ $mat-dark-theme-background: (
 // Theme Config
 
 body {
-  --primary-color: #6f33cc;
+  
+  --primary-color: #3880ff;
+  // --primary-color: #6f33cc;
   --primary-lighter-color: #d4c2f0;
   --primary-darker-color: #5220b9;
   --text-primary-color: #{$light-primary-text};
@@ -237,10 +241,14 @@ body {
 }
 
 $mat-primary: (
-  main: #6f33cc,
-  lighter: #d4c2f0,
-  darker: #5220b9,
+  main: #3880ff,
+  lighter: #93bafd, 
+  darker: #1d5dca, 
   200: #6f33cc, // For slide toggle,
+  // main: #6f33cc,
+  // lighter: #d4c2f0,
+  // darker: #5220b9,
+  // 200: #6f33cc, // For slide toggle,
   contrast : (
     main: $light-primary-text,
     lighter: $dark-primary-text,

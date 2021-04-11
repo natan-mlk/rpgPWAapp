@@ -5,7 +5,7 @@
     </ion-toolbar>
 </ion-header>
 
-  <ion-content>
+<ion-content>
 
 <ion-card *ngIf="!isLoading">
   <img src={{avatarImage}}>
@@ -63,12 +63,21 @@
     </form>
 
     <div style="display: flex; flex-direction: row-reverse;">
-      <button [disabled]="!(isFormValid && isAtLeastOneFilled)" mat-fab color="primary" style="font-size: 30px;" (click)="updateMoneyValue(true)">
+      <ion-fab-button color="primary" [disabled]="!(isFormValid && isAtLeastOneFilled)" (click)="updateMoneyValue(true)">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="warning" 
+        [disabled]="!(isFormValid && isAtLeastOneFilled)" 
+        (click)="updateMoneyValue(false)"
+        style="margin-right: 25px;">
+        <ion-icon name="remove-outline"></ion-icon>
+      </ion-fab-button>
+      <!-- <button [disabled]="!(isFormValid && isAtLeastOneFilled)" mat-fab color="primary" style="font-size: 30px;" (click)="updateMoneyValue(true)">
         <span style="color: white">+</span>
-      </button>
-      <button [disabled]="!(isFormValid && isAtLeastOneFilled)" mat-fab color="warn" style="font-size: 30px; margin-right: 25px;" (click)="updateMoneyValue(false)">
+      </button> -->
+      <!-- <button [disabled]="!(isFormValid && isAtLeastOneFilled)" mat-fab color="warn" style="font-size: 30px; margin-right: 25px;" (click)="updateMoneyValue(false)">
         <span style="color: white">-</span>
-      </button>
+      </button> -->
     </div>
 
     
@@ -80,7 +89,7 @@
       <ion-item *ngFor="let history of characterData.history">
         <ion-icon *ngIf="history.type" style="color: rgb(79, 179, 13)" slot="start" name="trending-up-outline"></ion-icon>
         <ion-icon *ngIf="!history.type" style="color: rgb(189, 44, 0)" slot="start" name="trending-down-outline"></ion-icon>
-        <ion-label>
+        <ion-label class="ion-text-wrap">
           <span>
             ZK: <b>{{history.value | GoldenCrownsPipe}}</b>,
             Szyl: <b>{{ history.value | SilverPipe}}</b>,
@@ -101,7 +110,7 @@
 </ion-card>
 
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button [routerLink]="['']">
+    <ion-fab-button [routerLink]="['']" color="primary" fill="outline">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

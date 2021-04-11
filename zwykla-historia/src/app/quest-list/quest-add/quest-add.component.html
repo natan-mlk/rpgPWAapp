@@ -1,10 +1,16 @@
-<form [formGroup]="formGroup">
+<!-- <mat-dialog-content> -->
+  <ion-card-content>
+    <form [formGroup]="formGroup">
   <mat-form-field appearance="outline">
     <mat-label>Quest</mat-label>
-    <textarea matInput autocomplete="off" type="text" formControlName="name" placeholder="Quest"></textarea>
+    <textarea style="color: #413f3f" matInput autocomplete="off" type="text" formControlName="name" placeholder="Quest"></textarea>
     <mat-error
       *ngIf="formGroup.get('name').hasError('required')">
       Napisz coś
+    </mat-error>
+    <mat-error
+      *ngIf="formGroup.get('name').hasError('minLength')">
+      Napisz coś więcej
     </mat-error>
   </mat-form-field>
 <br>
@@ -13,6 +19,12 @@
     <textarea matInput autocomplete="off" type="text" formControlName="description" placeholder="Opis"></textarea>
   </mat-form-field>
 </form>
+  </ion-card-content>
 
-<button mat-button (click)="closeDialog()">Anuluj</button>
-<button mat-button (click)="addQuest()">Dodaj</button>
+<!-- </mat-dialog-content> -->
+
+<mat-dialog-actions style="justify-content: space-around;">
+  <ion-button color="warning" (click)="closeDialog()">Anuluj</ion-button>
+  <ion-button color="primary" [disabled]="!isFormValid" (click)="addQuest()">Dodaj</ion-button>
+</mat-dialog-actions>
+
