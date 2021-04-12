@@ -4,6 +4,7 @@ import { QuestData } from './quest-list.model';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { QuestDeleteConfirmComponent } from './quest-delete-confirm/quest-delete-confirm.component';
 import { QuestAddComponent } from './quest-add/quest-add.component';
+import { QuestEditComponent } from './quest-edit/quest-edit.component';
 
 @Component({
   selector: 'app-quest-list',
@@ -51,7 +52,20 @@ export class QuestListComponent implements OnInit {
     dialogRef.componentInstance.questsList = this.questsList;
     dialogRef.componentInstance.currentId = this.currentId;
     
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result:boolean) => {
+      console.log('close result: ', result)
+      if(result) {
+        this.getQuestsData();
+      }
+    });
+  }
+
+  openEditDialog(quest: QuestData){
+    const dialogRef = this.dialog.open(QuestEditComponent);
+    dialogRef.componentInstance.questsList = this.questsList;
+    dialogRef.componentInstance.selectedQuest = quest;
+    
+    dialogRef.afterClosed().subscribe((result: boolean) => {
       console.log('close result: ', result)
       if(result) {
         this.getQuestsData();

@@ -1,4 +1,3 @@
-<!-- <mat-dialog-content> -->
   <ion-card-content>
     <form [formGroup]="formGroup">
   <mat-form-field appearance="outline">
@@ -21,10 +20,8 @@
 </form>
   </ion-card-content>
 
-<!-- </mat-dialog-content> -->
-
 <mat-dialog-actions style="justify-content: space-around;">
   <ion-button color="warning" (click)="closeDialog()">Anuluj</ion-button>
-  <ion-button color="primary" [disabled]="!isFormValid" (click)="addQuest()">Dodaj</ion-button>
+  <ion-button color="primary" [disabled]="!isFormValid" (click)="saveQuest()">Zapisz</ion-button>
 </mat-dialog-actions>
 

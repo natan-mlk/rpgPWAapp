@@ -18,6 +18,7 @@ import { GoldenCrownsPipe, PennyPipe, SilverPipe } from './assets/pipes';
 import { QuestListComponent } from './quest-list/quest-list.component';
 import { QuestDeleteConfirmComponent } from './quest-list/quest-delete-confirm/quest-delete-confirm.component';
 import { QuestAddComponent } from './quest-list/quest-add/quest-add.component';
+import { QuestEditComponent } from './quest-list/quest-edit/quest-edit.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { QuestAddComponent } from './quest-list/quest-add/quest-add.component';
     QuestListComponent,
     QuestDeleteConfirmComponent,
     QuestAddComponent,
+    QuestEditComponent,
     GoldenCrownsPipe,
     SilverPipe,
     PennyPipe,
