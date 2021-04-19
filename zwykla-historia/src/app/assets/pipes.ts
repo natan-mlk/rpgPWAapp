@@ -24,9 +24,6 @@ export class SilverPipe implements PipeTransform {
   })
 export class PennyPipe implements PipeTransform {
     transform(pennyAmount: number) {
-        // const crowns = Math.floor((pensValue / 12) / 20);
-        // const silver = Math.floor((pensValue / 12) - (crowns * 20));
-        // pens = newAmount - ((Math.floor((newAmount / 12))) * 12);
         return pennyAmount - ((Math.floor((pennyAmount / 12))) * 12);
     }
 }

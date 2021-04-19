@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Avatars } from '../assets/avatars';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,6 +8,7 @@ import { CharacterData } from './character-card.model';
 import { DatabaseCommunicationService } from '../services/database-communication.service';
 import { Subscription } from 'rxjs';
 import { isPositiveNumberValidator, isNotIntegerValidator } from '../assets/validators';
+import { CharacterMoneyHistoryComponent } from './character-money-history/character-money-history.component';
 
 @Component({
   selector: 'app-character-card',
@@ -15,31 +16,29 @@ import { isPositiveNumberValidator, isNotIntegerValidator } from '../assets/vali
   styleUrls: ['./character-card.component.scss'],
 })
 export class CharacterCardComponent implements OnInit, OnDestroy {
-  
-// podatek gustava źle odlicza się od np 1 pensa. Zrobić tak, żeby był pobierany dopiero od 10 pensów
-// wersja na kompa? Żeby panel działania był węższy a nie 100% szerkości monitora?
 
-// TODO: money amount is added to display before we know data was sent to database and updated
+  // TODO: money amount is added to display before we know data was sent to database and updated
+
+  @ViewChild('moneyHistory') moneyHistory: CharacterMoneyHistoryComponent;
 
   characterData: CharacterData;
   isLoading: boolean = true;
   selectedCharacter: string;
   avatarImage: string;
-  private formStatusSubscription: Subscription = Subscription.EMPTY;
-  private formValueSubscription: Subscription = Subscription.EMPTY;
-  
   isFormValid: boolean = false;
   isAtLeastOneFilled: boolean = false;
+  private formStatusSubscription: Subscription = Subscription.EMPTY;
+  private formValueSubscription: Subscription = Subscription.EMPTY;
+
 
   formGroup = new FormGroup({
     goldValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator()]),
-    silverValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator()]), 
+    silverValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator()]),
     pennyValue: new FormControl(null, [isPositiveNumberValidator.bind(this), isNotIntegerValidator()]),
     note: new FormControl(),
   })
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
     private httpService: DatabaseCommunicationService
@@ -66,7 +65,7 @@ export class CharacterCardComponent implements OnInit, OnDestroy {
   private setFormWatcher() {
     this.formStatusSubscription = this.formGroup.statusChanges.subscribe(
       status => {
-        if(status === 'INVALID') {
+        if (status === 'INVALID') {
           this.isFormValid = false;
         } else {
           this.isFormValid = true;
@@ -87,76 +86,51 @@ export class CharacterCardComponent implements OnInit, OnDestroy {
     )
   }
 
-  updateMoneyValue(operationType: boolean){
+  updateMoneyValue(operationType: boolean) {
     const formValue: FormValue = this.formGroup.value;
     let inputMoneyAmount = (formValue.goldValue * 20 * 12) + (formValue.silverValue * 12) + formValue.pennyValue;
     let taxForMages: number = 0;
 
-    if(!operationType && (this.characterData.money < inputMoneyAmount)){
-      this.snackBar.open('Chesz wydać więcej niż masz!', undefined, {
+    if (!operationType && (this.characterData.money < inputMoneyAmount)) {
+      this.snackBar.open('Chcesz wydać więcej niż masz!', undefined, {
         duration: 3000,
       });
     } else {
-      if(this.selectedCharacter === 'gustav' && operationType) {
+      if (this.selectedCharacter === 'gustav' && operationType) {
         taxForMages = this.countTax(inputMoneyAmount);
         inputMoneyAmount = inputMoneyAmount - taxForMages;
       }
 
-    this.createMoneyHistory(formValue, inputMoneyAmount, operationType, taxForMages);
-    
-    let newMoneyAmount = 0;
-    if (operationType){
-      newMoneyAmount = this.characterData.money + inputMoneyAmount;
-    } else {
-      newMoneyAmount = this.characterData.money - inputMoneyAmount;
-    }
+      this.moneyHistory.createMoneyHistory(formValue, inputMoneyAmount, operationType, taxForMages)
 
-    this.characterData.money = newMoneyAmount;
-    this.sendToDataBase(newMoneyAmount);
+      let newMoneyAmount = 0;
+      if (operationType) {
+        newMoneyAmount = this.characterData.money + inputMoneyAmount;
+      } else {
+        newMoneyAmount = this.characterData.money - inputMoneyAmount;
+      }
+
+      this.characterData.money = newMoneyAmount;
+      this.sendToDataBase(newMoneyAmount);
     }
   }
 
-  private countTax(inputMoneyAmount): number{
+  private countTax(inputMoneyAmount): number {
     if (inputMoneyAmount < 10) {
       return 0;
     }
     return Math.round(inputMoneyAmount * 0.1);
   }
 
-  private setAvatarImage(selectedCharacter){
+  private setAvatarImage(selectedCharacter) {
     for (let item in Avatars) {
-      if(item === selectedCharacter){
+      if (item === selectedCharacter) {
         this.avatarImage = Avatars[item]
       }
     }
   }
 
-  private createMoneyHistory(formValue: FormValue, inputMoney: number, operationType: boolean, taxForMages?: number){
-    let characterHistoryObj;
-    if(this.selectedCharacter === 'gustav' && operationType){
-      characterHistoryObj = {
-        'note': formValue.note, 
-        'value': operationType ? inputMoney : inputMoney, 
-        'tax': taxForMages,
-        'type': operationType
-      };
-    } else {
-      characterHistoryObj = {
-        'note': formValue.note, 
-        'value': operationType ? inputMoney : inputMoney, 
-        'type': operationType
-      };
-    }
-
-    if(this.characterData.history.length < 10){
-      this.characterData.history.unshift(characterHistoryObj)
-    } else {
-      this.characterData.history.pop();
-      this.characterData.history.unshift(characterHistoryObj)
-    }
-  }
-
-  private sendToDataBase(newMoneyAmount:number) {
+  private sendToDataBase(newMoneyAmount: number) {
     this.httpService.patchCharacterData(
       this.selectedCharacter, this.characterData, newMoneyAmount
     ).subscribe(

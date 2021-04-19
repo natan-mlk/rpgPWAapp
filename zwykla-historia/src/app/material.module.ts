@@ -28,10 +28,3 @@ import {MatDialogModule} from '@angular/material/dialog';
   ]
 })
 export class MaterialModule { }
-
-// exports: [
-//   MatButtonModule,
-//   MatFormFieldModule,
-//   MatInputModule,
-//   MatIconModule,
-// ]

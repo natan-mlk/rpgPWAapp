@@ -1,119 +1,78 @@
-<!-- <ion-content fullscreen="true"> -->
-<!-- <ion-content class="ion-padding"> -->
 <ion-header>
-    <ion-toolbar>
-    </ion-toolbar>
+  <ion-toolbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card *ngIf="!isLoading">
+    <img src={{avatarImage}}>
+    <ion-card-header>
+      <ion-card-title>{{characterData.name}}</ion-card-title>
+    </ion-card-header>
 
-<ion-card *ngIf="!isLoading">
-  <img src={{avatarImage}}>
-  <ion-card-header>
-    <ion-card-title>{{characterData.name}}</ion-card-title>
-  </ion-card-header>
+    <ion-card-content>
+      <h2>Korony: <b>{{ characterData.money | GoldenCrownsPipe}}</b>,
+        Szylingi: <b>{{ characterData.money | SilverPipe}}</b>,
+        Pensy: <b>{{ characterData.money | PennyPipe}}</b>
+      </h2>
 
-  <ion-card-content>
-    <h2>Korony: <b>{{ characterData.money | GoldenCrownsPipe}}</b>, 
-      Szylingi: <b>{{ characterData.money | SilverPipe}}</b>, 
-      Pensy: <b>{{ characterData.money | PennyPipe}}</b>
-    </h2>
+      <form [formGroup]="formGroup">
+        <mat-form-field appearance="outline" class="money-input money-input--margin">
+          <mat-label>Korony</mat-label>
+          <input autocomplete="off" type="number" matInput formControlName="goldValue" placeholder="korony">
+          <mat-error
+            *ngIf="formGroup.get('goldValue').hasError('isLessThanZero') || formGroup.get('goldValue').hasError('isNotInteger')">
+            Nie wygłupiaj się
+          </mat-error>
+        </mat-form-field>
 
+        <mat-form-field appearance="outline" class="money-input money-input--margin">
+          <mat-label>Szylingi</mat-label>
+          <input autocomplete="off" type="number" matInput formControlName="silverValue" placeholder="szylingi">
+          <mat-error
+            *ngIf="formGroup.get('silverValue').hasError('isLessThanZero') || formGroup.get('silverValue').hasError('isNotInteger')">
+            Nie wygłupiaj się
+          </mat-error>
+        </mat-form-field>
 
-    <form [formGroup]="formGroup">
-      <mat-form-field appearance="outline" style="width: 30%; margin-right: 5%;">
-        <mat-label>Korony</mat-label>
-        <input autocomplete="off" 
-        type="number" matInput
-        formControlName="goldValue" 
-        placeholder="korony">
-        <mat-error *ngIf="formGroup.get('goldValue').hasError('isLessThanZero') || formGroup.get('goldValue').hasError('isNotInteger')">
-          Nie wygłupiaj się
-        </mat-error>
-      </mat-form-field> 
+        <mat-form-field appearance="outline" class="money-input">
+          <mat-label>Pensy</mat-label>
+          <input autocomplete="off" type="number" matInput formControlName="pennyValue" placeholder="pensy">
+          <mat-error
+            *ngIf="formGroup.get('pennyValue').hasError('isLessThanZero') || formGroup.get('pennyValue').hasError('isNotInteger')">
+            Nie wygłupiaj się
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" style="width: 30%; margin-right: 5%;">
-        <mat-label>Szylingi</mat-label>
-        <input autocomplete="off"
-        type="number" matInput
-        formControlName="silverValue" 
-        placeholder="szylingi">
-        <mat-error *ngIf="formGroup.get('silverValue').hasError('isLessThanZero') || formGroup.get('silverValue').hasError('isNotInteger')">
-          Nie wygłupiaj się
-        </mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="note-input">
+          <mat-label>Notka</mat-label>
+          <textarea matInput formControlName="note" placeholder="notatka"></textarea>
+        </mat-form-field>
+      </form>
 
-      <mat-form-field appearance="outline" style="width: 30%;">
-        <mat-label>Pensy</mat-label>
-        <input autocomplete="off"
-        type="number" matInput
-        formControlName="pennyValue" 
-        placeholder="pensy">
-        <mat-error *ngIf="formGroup.get('pennyValue').hasError('isLessThanZero') || formGroup.get('pennyValue').hasError('isNotInteger')">
-          Nie wygłupiaj się
-        </mat-error>
-      </mat-form-field>
+      <div style="display: flex; flex-direction: row-reverse;">
+        <ion-fab-button color="primary" [disabled]="!(isFormValid && isAtLeastOneFilled)"
+          (click)="updateMoneyValue(true)">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="warning" [disabled]="!(isFormValid && isAtLeastOneFilled)"
+          (click)="updateMoneyValue(false)" style="margin-right: 25px;">
+          <ion-icon name="remove-outline"></ion-icon>
+        </ion-fab-button>
+      </div>
 
-      <mat-form-field appearance="outline" style="width: 65%;">
-        <mat-label>Notka</mat-label>
-        <textarea matInput
-        formControlName="note" 
-        placeholder="notatka"></textarea>
-      </mat-form-field>
-    </form>
+      <app-character-money-history #moneyHistory
+        [characterData]="characterData"
+        [selectedCharacter] = "selectedCharacter">
+      </app-character-money-history>
 
-    <div style="display: flex; flex-direction: row-reverse;">
-      <ion-fab-button color="primary" [disabled]="!(isFormValid && isAtLeastOneFilled)" (click)="updateMoneyValue(true)">
-        <ion-icon name="add-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="warning" 
-        [disabled]="!(isFormValid && isAtLeastOneFilled)" 
-        (click)="updateMoneyValue(false)"
-        style="margin-right: 25px;">
-        <ion-icon name="remove-outline"></ion-icon>
-      </ion-fab-button>
-      <!-- <button [disabled]="!(isFormValid && isAtLeastOneFilled)" mat-fab color="primary" style="font-size: 30px;" (click)="updateMoneyValue(true)">
-        <span style="color: white">+</span>
-      </button> -->
-      <!-- <button [disabled]="!(isFormValid && isAtLeastOneFilled)" mat-fab color="warn" style="font-size: 30px; margin-right: 25px;" (click)="updateMoneyValue(false)">
-        <span style="color: white">-</span>
-      </button> -->
-    </div>
-
-    
-    <ion-list style="margin-top: 20px;">
-      <ion-list-header style="font-size: 20px;">
-        <ion-icon name="receipt-outline"></ion-icon> &nbsp; Historia
-      </ion-list-header>
-      
-      <ion-item *ngFor="let history of characterData.history">
-        <ion-icon *ngIf="history.type" style="color: rgb(79, 179, 13)" slot="start" name="trending-up-outline"></ion-icon>
-        <ion-icon *ngIf="!history.type" style="color: rgb(189, 44, 0)" slot="start" name="trending-down-outline"></ion-icon>
-        <ion-label class="ion-text-wrap">
-          <span>
-            ZK: <b>{{history.value | GoldenCrownsPipe}}</b>,
-            Szyl: <b>{{ history.value | SilverPipe}}</b>,
-            Pens: <b>{{ history.value | PennyPipe}}</b> 
-          </span><br>
-          <ng-container *ngIf="selectedCharacter === 'gustav' && history.type">
-            <span style="font-size: 15px;">
-              Podatek: ZK: 
-              {{(history.tax | GoldenCrownsPipe) + ', Sz: ' + (history.tax | SilverPipe) + ', P: ' + (history.tax | PennyPipe)}}
-            </span><br>
-          </ng-container>
-          <span>Notka: <i>{{history.note}}</i></span>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-card-content>
-
-</ion-card>
+    </ion-card-content>
+  </ion-card>
 
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button [routerLink]="['']" color="primary" fill="outline">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
-</ion-content>
 
+</ion-content>

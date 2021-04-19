@@ -19,6 +19,7 @@ import { QuestListComponent } from './quest-list/quest-list.component';
 import { QuestDeleteConfirmComponent } from './quest-list/quest-delete-confirm/quest-delete-confirm.component';
 import { QuestAddComponent } from './quest-list/quest-add/quest-add.component';
 import { QuestEditComponent } from './quest-list/quest-edit/quest-edit.component';
+import { CharacterMoneyHistoryComponent } from './character-card/character-money-history/character-money-history.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { QuestEditComponent } from './quest-list/quest-edit/quest-edit.component
     QuestDeleteConfirmComponent,
     QuestAddComponent,
     QuestEditComponent,
+    CharacterMoneyHistoryComponent,
     GoldenCrownsPipe,
     SilverPipe,
     PennyPipe,
@@ -42,7 +44,6 @@ import { QuestEditComponent } from './quest-list/quest-edit/quest-edit.component
     HttpClientModule, 
     BrowserAnimationsModule,
     MaterialModule,
-    
     FormsModule,
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

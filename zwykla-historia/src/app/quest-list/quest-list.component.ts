@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseCommunicationService } from '../services/database-communication.service';
 import { QuestData } from './quest-list.model';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { QuestDeleteConfirmComponent } from './quest-delete-confirm/quest-delete-confirm.component';
 import { QuestAddComponent } from './quest-add/quest-add.component';
 import { QuestEditComponent } from './quest-edit/quest-edit.component';
@@ -25,14 +25,14 @@ export class QuestListComponent implements OnInit {
     this.getQuestsData();
   }
 
-  getQuestsData(){
+  getQuestsData() {
     this.httpService.getQuestsAndId()
-    .subscribe(
-      (quests: [QuestData[], number]) => {
-        this.questsList = quests[0];
-        this.currentId = quests[1];
-      }
-    )
+      .subscribe(
+        (quests: [QuestData[], number]) => {
+          this.questsList = quests[0];
+          this.currentId = quests[1];
+        }
+      )
   }
 
   openDeleteDialog(quest: QuestData) {
@@ -41,7 +41,7 @@ export class QuestListComponent implements OnInit {
     dialogRef.componentInstance.questsList = this.questsList;
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.getQuestsData();
       }
     });
@@ -51,26 +51,25 @@ export class QuestListComponent implements OnInit {
     const dialogRef = this.dialog.open(QuestAddComponent);
     dialogRef.componentInstance.questsList = this.questsList;
     dialogRef.componentInstance.currentId = this.currentId;
-    
-    dialogRef.afterClosed().subscribe((result:boolean) => {
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
       console.log('close result: ', result)
-      if(result) {
+      if (result) {
         this.getQuestsData();
       }
     });
   }
 
-  openEditDialog(quest: QuestData){
+  openEditDialog(quest: QuestData) {
     const dialogRef = this.dialog.open(QuestEditComponent);
     dialogRef.componentInstance.questsList = this.questsList;
     dialogRef.componentInstance.selectedQuest = quest;
-    
+
     dialogRef.afterClosed().subscribe((result: boolean) => {
       console.log('close result: ', result)
-      if(result) {
+      if (result) {
         this.getQuestsData();
       }
     });
   }
-
 }

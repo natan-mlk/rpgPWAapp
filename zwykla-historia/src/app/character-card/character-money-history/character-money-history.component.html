@@ -1,0 +1,27 @@
+<ion-list style="margin-top: 20px;">
+  <ion-list-header class="history-list__header">
+    <ion-icon name="receipt-outline"></ion-icon> &nbsp; Historia
+  </ion-list-header>
+
+  <ion-item *ngFor="let history of characterData.history">
+    <ion-icon *ngIf="history.type" class="history-list__icon--up-trend" slot="start" name="trending-up-outline">
+    </ion-icon>
+    <ion-icon *ngIf="!history.type" class="history-list__icon--down-trend" slot="start" name="trending-down-outline">
+    </ion-icon>
+    <ion-label class="ion-text-wrap">
+      <span>
+        ZK: <b>{{history.value | GoldenCrownsPipe}}</b>,
+        Szyl: <b>{{ history.value | SilverPipe}}</b>,
+        Pens: <b>{{ history.value | PennyPipe}}</b>
+      </span><br>
+      <ng-container *ngIf="selectedCharacter === 'gustav' && history.type">
+        <span style="font-size: 15px;">
+          Podatek: ZK:
+          {{(history.tax | GoldenCrownsPipe) + ', Sz: ' + (history.tax | SilverPipe) + ', P: ' + (history.tax |
+          PennyPipe)}}
+        </span><br>
+      </ng-container>
+      <span>Notka: <i>{{history.note}}</i></span>
+    </ion-label>
+  </ion-item>
+</ion-list>

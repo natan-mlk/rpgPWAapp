@@ -1,33 +1,30 @@
 <ion-card-content>
   <mat-list>
-  <div class="list-header">
-    <span>Aktywne questy:</span>
-    <!-- <button mat-stroked-button (click)="openAddQuestsDialog()" class="list-header__button">Nowy</button> -->
-    <!-- <ion-button fill="outline" (click)="openAddQuestsDialog()">Nowy</ion-button> -->
-    <ion-chip (click)="openAddQuestsDialog()" color="primary" outline="true">
-      <ion-label>Nowy</ion-label>
-    </ion-chip>
-  </div>
-  <div *ngFor="let quest of questsList">
-        <mat-divider></mat-divider>
-    <div class="list-item__wrapper">
-      <div style="padding-right: 10px;">
-        <div mat-line><b>{{quest.name}}</b></div>
-        <div mat-line><ion-note>{{quest.description}}</ion-note></div>
-      </div>
+    <div class="list-header">
+      <span>Aktywne questy:</span>
+      <ion-chip (click)="openAddQuestsDialog()" color="primary" outline="true">
+        <ion-label>Nowy</ion-label>
+      </ion-chip>
+    </div>
+    <div *ngFor="let quest of questsList">
+      <mat-divider></mat-divider>
+      <div class="list-item__wrapper">
+        <div style="padding-right: 10px;">
+          <div mat-line><b>{{quest.name}}</b></div>
+          <div mat-line>
+            <ion-note>{{quest.description}}</ion-note>
+          </div>
+        </div>
 
-      <div style="display: flex; align-items: flex-start;">
-        <button mat-button (click)="openEditDialog(quest)" class="list-item__button">
-          <mat-icon style="height: 20px; width: 20px; font-size: 20px;" mat-list-icon>edit</mat-icon>
-        </button>
-        <button mat-button (click)="openDeleteDialog(quest)" class="list-item__button">
-          <mat-icon style="height: 20px; width: 20px; font-size: 20px;" mat-list-icon>delete</mat-icon>
-        </button>
+        <div style="display: flex; align-items: flex-start;">
+          <button mat-button (click)="openEditDialog(quest)" class="list-item__button">
+            <mat-icon style="height: 20px; width: 20px; font-size: 20px;" mat-list-icon>edit</mat-icon>
+          </button>
+          <button mat-button (click)="openDeleteDialog(quest)" class="list-item__button">
+            <mat-icon style="height: 20px; width: 20px; font-size: 20px;" mat-list-icon>delete</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
-
-    
-  </div>
-
-</mat-list>
+  </mat-list>
 </ion-card-content>

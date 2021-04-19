@@ -1,0 +1,15 @@
+.history-list {
+    &__header {
+        font-size: 20px;
+    }
+
+    &__icon {
+        &--up-trend {
+            color: rgb(79, 179, 13)
+        }
+
+        &--down-trend {
+            color: rgb(189, 44, 0)
+        }
+    }
+}

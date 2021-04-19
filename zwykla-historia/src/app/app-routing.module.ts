@@ -6,7 +6,6 @@ import { HomeComponent } from './home/home.component';
 const routes: Routes = [
   {
     path: '', component: HomeComponent
-    // loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {path: 'ermin', component: CharacterCardComponent},
   {path: 'lokkri', component: CharacterCardComponent},
