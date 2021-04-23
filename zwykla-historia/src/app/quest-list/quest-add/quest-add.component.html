@@ -3,7 +3,12 @@
     <form [formGroup]="formGroup">
   <mat-form-field appearance="outline">
     <mat-label>Quest</mat-label>
-    <textarea style="color: #413f3f" matInput autocomplete="off" type="text" formControlName="name" placeholder="Quest"></textarea>
+    <textarea style="color: #413f3f" 
+      matInput autocomplete="off" 
+      type="text" 
+      formControlName="name" 
+      placeholder="Quest">
+    </textarea>
     <mat-error
       *ngIf="formGroup.get('name').hasError('required')">
       Napisz coś
@@ -16,7 +21,12 @@
 <br>
   <mat-form-field appearance="outline">
     <mat-label>Opis</mat-label>
-    <textarea style="color: #413f3f" matInput autocomplete="off" type="text" formControlName="description" placeholder="Opis"></textarea>
+    <textarea style="color: #413f3f" 
+      matInput autocomplete="off" 
+      type="text" 
+      formControlName="description" 
+      placeholder="Opis">
+    </textarea>
   </mat-form-field>
 </form>
   </ion-card-content>

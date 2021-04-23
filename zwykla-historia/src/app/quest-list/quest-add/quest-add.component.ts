@@ -37,7 +37,6 @@ export class QuestAddComponent implements OnInit, OnDestroy {
 
     this.formStatusSubscription = this.formGroup.statusChanges.subscribe(
       status => {
-        console.log('form status - ', status)
         if(status === 'INVALID') {
           this.isFormValid = false;
         } else {

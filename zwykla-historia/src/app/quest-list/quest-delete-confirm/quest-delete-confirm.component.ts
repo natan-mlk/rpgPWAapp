@@ -30,7 +30,6 @@ export class QuestDeleteConfirmComponent implements OnInit {
     })
     const tempObjRecentQuests = {recentQuests: this.questsList}
     const questsListJSON = JSON.stringify(tempObjRecentQuests);
-    console.log('Recent Quests from delete', tempObjRecentQuests)
 
     this.databaseService.patchQuestsData(questsListJSON).subscribe( result => {
       if(result) {

@@ -66,7 +66,6 @@ export class QuestListComponent implements OnInit {
     dialogRef.componentInstance.selectedQuest = quest;
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
-      console.log('close result: ', result)
       if (result) {
         this.getQuestsData();
       }
